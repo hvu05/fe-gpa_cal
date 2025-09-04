@@ -1,0 +1,12 @@
+// main.scss
+@import "./abstracts/variables";
+
+@import "./base/reset";
+@import "./base/global";
+@import "./base/typography";
+
+@import "./components/button";
+@import "./components/card";
+@import "./components/modal";
+
+

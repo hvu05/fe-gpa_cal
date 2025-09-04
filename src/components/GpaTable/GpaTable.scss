@@ -1,0 +1,87 @@
+@import "../../style/abstracts/variables";
+
+.gpa-table-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.gpa-table {
+  border-collapse: separate; // Thay đổi từ collapse sang separate
+  border-spacing: 0; // Loại bỏ khoảng cách giữa các ô
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 800px;
+  border-radius: 5px; // Bo góc toàn bộ bảng
+  overflow: hidden; // Ẩn phần vượt ra ngoài để bo góc hoạt động
+
+  th,
+  td {
+    padding: 8px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+  }
+  td {
+    overflow: hidden;
+  }
+  th {
+    background-color: $button-color;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    border-top: none; // Loại bỏ viền trên của header
+  }
+  tr:first-child th:first-child {
+    border-top-left-radius: 5px; // Bo góc trái trên
+  }
+  tr:first-child th:last-child {
+    border-top-right-radius: 5px; // Bo góc phải trên
+  }
+
+  tr:last-child td:first-child {
+    border-bottom-left-radius: 5px; // Bo góc trái dưới
+  }
+  tr:last-child td:last-child {
+    border-bottom-right-radius: 5px; // Bo góc phải dưới
+  }
+  tr:hover {
+    background-color: #f5f5f5;
+  }
+  td:nth-child(2) {
+    // Cột thứ 2 là Tên môn học
+    max-width: 230px; // Giới hạn chiều rộng tối đa
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; // Ngăn xuống dòng
+  }
+
+  .action-btn {
+    padding: 3px 7px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .edit-btn {
+    background-color: white;
+    color: black;
+    border: 2px solid $button-color;
+    color: $primary-color;
+
+    &:hover {
+      background-color: $background;
+    }
+  }
+
+  .delete-btn {
+    background-color: $button-delete;
+    border: 2px solid $button-delete;
+    color: white;
+
+    &:hover {
+      background-color: $button-delete-hover;
+    }
+  }
+}

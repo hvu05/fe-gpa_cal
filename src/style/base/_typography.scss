@@ -1,0 +1,91 @@
+@import '../abstracts/variables';
+* {
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
+}
+
+.content{
+    margin-left: 100px;
+    margin-right: 100px;
+}
+.form-container {
+    display: flex;
+    justify-content: center;
+}
+form {
+    width: 100%;
+    .form-group {
+        display: flex;
+        position: relative;
+        i {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 20px;
+        }
+        label {
+            position: absolute;
+            left: 50px;
+            top: 4px;
+            font-size: 15px;
+
+        }
+        input {
+            height: 50px;
+            width: 550px;
+            padding-left: 50px;
+            padding-top: 20px;
+            font-weight: 400;
+            font-size: 18px;
+            border: none;
+            background-color:$form-login;
+            border-radius: 10px;
+            // cursor: pointer;
+            &:focus{
+                border: none;
+            }
+        }
+        margin: 20px 0;
+    }
+}
+
+
+.btn-submit {
+    box-shadow: 3px 3px 20px 4px rgba(0,0,0,0.3);
+    background-color: $primary-color;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    width: 600px;
+    height: 60px;
+    // text-align: center;
+    cursor: pointer;
+}
+.btn-submit-container {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #888; /* màu chữ */
+  margin: 20px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #ccc; /* đường kẻ */
+}
+
+.divider:not(:empty)::before {
+  margin-right: .75em;
+}
+
+.divider:not(:empty)::after {
+  margin-left: .75em;
+}

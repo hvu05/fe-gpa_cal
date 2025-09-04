@@ -1,0 +1,63 @@
+@import "../../style/abstracts/_variables.scss";
+.login {
+  background-color: $background;
+  height: 100vh;
+  display: flex;
+  img {
+    width: calc(100vw * 2 / 5 - 200px);
+    margin-left: 130px;
+    margin-right: 100px;
+  }
+  .form-login {
+    background-color: white;
+    // flex: 3;
+    display: inline-block;
+    width: calc(100vw * 3 / 5 - 100px);
+    height: calc(100vh - 70px);
+    margin: 50px 20px 50px 20px;
+    border-radius: 10px;
+
+    .title {
+      margin: 10px 30px;
+      .webcome {
+        font-size: 23px;
+        font-weight: 500;
+      }
+      .unicalc {
+        font-size: 40px;
+        color: $primary-color;
+        font-weight: 700;
+      }
+    }
+  }
+
+  form {
+   .extra-info {
+      margin: 0 110px;
+      display: flex;
+      justify-content: space-between;
+
+      .remember {
+         display: flex;
+
+      }
+      .forgot {
+         color: $primary-color;
+         cursor: pointer;
+      }
+   }
+  }
+
+}
+.signup {
+    margin: -10px 0px;
+}
+.signup-divider {
+    margin: 10px;
+}
+.send-otp {
+    cursor: pointer;
+    &:hover {
+        color: $primary-color;
+    }
+}
