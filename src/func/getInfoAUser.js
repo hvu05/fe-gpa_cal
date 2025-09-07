@@ -2,20 +2,17 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { URL_BASE_API } from "../constants";
 import { message } from "antd";
-import { getTokenFromUrl } from "./getTokenFromURL";
 
-function useGetAllGrade(refresh) {
-    const [grades, setGrades] = useState([])
+function useInfoAUser(refresh) {
+    const [user, setuser] = useState()
     const [loading, setLoading] = useState(true)
-    const token = localStorage.getItem('token')
     
     useEffect(() => {
-        const getAllGrade = async() => {
+        const getAUser = async() => {
             try {
-                const response = await axios.get(`${URL_BASE_API}/grade`, { withCredentials: true })
+                const response = await axios.get(`${URL_BASE_API}/user`, { withCredentials: true })
                 setLoading(false)
-                setGrades(response.data.data)
-                console.log('grades',response.data.data)
+                setuser(response.data.data[0])
 
             } catch (err) {
                 message.error('Vui lòng đăng nhập lại')
@@ -24,10 +21,10 @@ function useGetAllGrade(refresh) {
                 // setLoading(false)
             }
         }
-        getAllGrade()
+        getAUser()
     }, [refresh])
     
-    return {grades, loading}
+    return {user, loading}
 }
 
-export default useGetAllGrade
+export default useInfoAUser

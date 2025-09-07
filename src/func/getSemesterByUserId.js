@@ -11,9 +11,7 @@ function useSemesterByUserId(refresh) {
     useEffect(() => {
         const getSemester = async() => {
             try {
-                const response = await axios.get(`${URL_BASE_API}/semester`, {
-                    headers: {token: token}
-                })
+                const response = await axios.get(`${URL_BASE_API}/semester`, { withCredentials: true })
                 setLoading(false)
                 setSemesters(response)
             } catch (err) {

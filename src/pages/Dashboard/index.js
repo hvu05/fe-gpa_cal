@@ -1,21 +1,32 @@
+import axios from 'axios'
 import DashboardComponent from '../../components/DashboardComponent'
 import GpaCalc from '../../components/GpaCalc'
 import Profile from '../../components/Profile'
 import { getTokenFromUrl } from '../../func/getTokenFromURL'
 import './Dashboard.scss'
 import { useState } from 'react'
-
+import { URL_BASE_API } from '../../constants'
+import { message } from 'antd'
+import { useNavigate } from 'react-router-dom'
 
 function Dashboard() {
     const [isOpen, setIsOpen] = useState(true)
-    const [activeItem, setActiveItem] = useState('GPA Calculator')
+    const [activeItem, setActiveItem] = useState('profile')
     const token = getTokenFromUrl()
     localStorage.setItem('token', token)
-    
+    const navigate = useNavigate()
     const components = {
         'Dashboard': <DashboardComponent />,
         'GPA Calculator': <GpaCalc />,
-        'profile': <Profile />
+        'profile': <Profile />,
+    }
+    const HandleLogout = async () => {
+        try {
+            const result = await axios.post(`${URL_BASE_API}/auth/logout`, {}, { withCredentials: true })
+            navigate('/')
+        } catch (err) {
+            message.error('Log Out System ERROR')
+        }
     }
     return (
         <>
@@ -39,13 +50,6 @@ function Dashboard() {
                         </div>
 
                         <div
-                            className={`item ${activeItem == 'file' ? 'item-active' : ''}`}
-                            onClick={() => setActiveItem("file")}
-                        >
-                            <i class="fa-solid fa-file-export"></i> File export
-                        </div>
-
-                        <div
                             className={`item ${activeItem == 'profile' ? 'item-active' : ''}`}
                             onClick={() => setActiveItem("profile")}
                         >
@@ -59,12 +63,19 @@ function Dashboard() {
                         </div>
 
                         <div
-                            className={`item item-logout`}
+                            className={`item  ${activeItem == 'Logout' ? 'item-active' : ''}`}
+                            onClick={HandleLogout}
                         >
                             <i class="fa-solid fa-arrow-right-from-bracket"></i> Log out
                         </div>
                     </div>
                 </aside>
+                {!isOpen &&  <div
+                    className='item-logout'
+                    onClick={HandleLogout}
+                >
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Log out
+                </div>}
 
                 <main className='main'>
                     <div className='header-main'>
@@ -80,8 +91,8 @@ function Dashboard() {
                         </button>
                     </div>
                     {components[activeItem] || <p>Tính năng đang được phát triển</p>}
-                    
-                    
+
+
                 </main>
             </div>
         </>

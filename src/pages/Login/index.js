@@ -21,11 +21,10 @@ function Login() {
         try {
             const user = await axios.post(`${URL_BASE_API}/auth/login`, {
                 username, password
-            })
-            if (user.data.accessToken) {
-                localStorage.setItem('token', user.data.accessToken)
+            }, { withCredentials: true })
+            if (user) {
                 message.success('Login success')
-                navigate(`/dashboard?token=${user.data.accessToken}`)
+                navigate(`/dashboard`)
             }
             else {
                 message.error("Login failed! Because server")

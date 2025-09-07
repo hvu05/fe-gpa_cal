@@ -1,17 +1,20 @@
-import React, { useState } from "react";
-import "./GpaTable.scss"; // File CSS tùy chọn để styling
-import useGetAllGrade from "../../func/getAllGrade";
-import axios from "axios";
-import { URL_BASE_API } from "../../constants";
-import { message } from "antd";
+import React, { useState } from "react"
+import "./GpaTable.scss" // File CSS tùy chọn để styling
+import useGetAllGrade from "../../func/getAllGrade"
+import axios from "axios"
+import { URL_BASE_API } from "../../constants"
+import { message } from "antd"
 
 const GpaTable = ({ refresh, setRefresh }) => {
-  const {grades, loading} = useGetAllGrade(refresh)
-  const token = localStorage.getItem('token')
+  const { grades, loading } = useGetAllGrade(refresh)
+
+  const [editingId, setEditingId] = useState({})
+  const [editValues, setEditValues] = useState({})
+
   const handleDelete = async (_id) => {
     try {
       await axios.delete(`${URL_BASE_API}/grade/${_id}`, {
-        headers: {token: token}
+        withCredentials: true
       })
       setRefresh(prev => !prev)
       message.success('Delete a subject success')
@@ -20,12 +23,58 @@ const GpaTable = ({ refresh, setRefresh }) => {
     }
   }
 
-  const handleEdit = (gradeId, subjectId) => {
-    
+  // const handleEdit = (          gradeId,     subjectId) => {
+  // onClick={() => handleEdit(subject._id, subject.subjectId._id)}
+
+  // }
+  const handleEdit = (subject) => {
+    setEditingId({ gradeId: subject._id, subjectId: subject.subjectId._id })
+    setEditValues({
+      grade4: subject.grade4,
+      grade10: subject.grade10,
+      credit: subject.subjectId.credit,
+      subjectName: subject.subjectId.subjectName
+    })
   }
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setEditValues(prev => ({ ...prev, [name]: value }))
+  }
+  const handleSave = async (gradeId, subjectId) => {
+    try {
+      // console.log('edit value', editValues)
+      // console.log(gradeId, subjectId)
+      await axios.put(`${URL_BASE_API}/grade`, {
+        _id: gradeId,
+        grade4: editValues.grade4,
+        grade10: editValues.grade10
+      }, {
+        withCredentials: true
+      })
+      await axios.put(`${URL_BASE_API}/subject`, {
+        idSubject: subjectId,
+        subjectName: editValues.subjectName,
+        credit: editValues.credit
+      }, {
+        withCredentials: true
+      })
+      setEditingId({ gradeId: 0 });
+      setEditValues({});
+      setRefresh(prev => !prev);
+    } catch (err) {
+      message.error("Update failed")
+    }
+  }
+
   return (
     <div className="gpa-table-container">
       {loading && <p>Loading ...</p>}
+      {!loading && 
+        <div className="overall-container">
+          <div className="overallGpa">Điểm TBTL: <span>{grades.overallGPA}</span></div>
+          <div className="totalCredit">Tổng TCTL: <span>{grades.totalCredit}</span></div>
+        </div>
+      }
       {!loading && grades.gradesBySemester.map((semester, semesterIndex) => (
         <div key={semester.semesterId} className="semester-table-wrapper">
           <h3>{semester.semesterName}</h3>
@@ -46,27 +95,82 @@ const GpaTable = ({ refresh, setRefresh }) => {
               {semester.subjects.length > 0 && semester.subjects.map((subject, subjectIndex) => (
                 <tr key={subject._id}>
                   <td>{subjectIndex + 1}</td>
-                  <td>{subject.subjectId.subjectName}</td>
-                  <td>{subject.subjectId.credit}</td>
-                  <td>{subject.grade4}</td>
-                  <td>{subject.grade10}</td>
-                  <td>{subject.gradeChar}</td>
-                  <td>
-                    <button
-                      className="action-btn edit-btn"
-                      onClick={() => handleEdit(subject._id, subject.subjectId._id)}
-                    >
-                      Sửa
-                    </button>
-                    <button
-                      className="action-btn delete-btn"
-                      onClick={() => handleDelete(subject._id)}
-                    >
-                      Xóa
-                    </button>
-                  </td>
+
+                  {editingId.gradeId === subject._id ? (
+                    <>
+                      <td>
+                        <input
+                          name="subjectName"
+                          value={editValues.subjectName}
+                          onChange={handleChange}
+                          className="input-subject-name"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          name="credit"
+                          value={editValues.credit}
+                          onChange={handleChange}
+                          type="number"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          name="grade4"
+                          value={editValues.grade4}
+                          onChange={handleChange}
+                          type="number"
+                          step={0.5}
+                          max={4}
+                          min={0}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          name="grade10"
+                          value={editValues.grade10}
+                          onChange={handleChange}
+                        />
+                      </td>
+                      <td>{subject.gradeChar}</td>
+                      <td>
+
+                        <button className="action-btn cancel-btn" onClick={() => setEditingId({ gradeId: 0 })}>Hủy</button>
+                        <button
+                          onClick={() => handleSave(subject._id, subject.subjectId._id)}
+                          className="action-btn save-btn"
+                        >
+                          Lưu
+                        </button>
+                      </td>
+                    </>
+                  ) : (
+                    <>
+                      <td>{subject.subjectId.subjectName}</td>
+                      <td>{subject.subjectId.credit}</td>
+                      <td>{subject.grade4}</td>
+                      <td>{subject.grade10}</td>
+                      <td>{subject.gradeChar}</td>
+
+                      <td>
+                        <button
+                          className="action-btn edit-btn"
+                          onClick={() => handleEdit(subject)}
+                        >
+                          Sửa
+                        </button>
+                        <button
+                          className="action-btn delete-btn"
+                          onClick={() => handleDelete(subject._id)}
+                        >
+                          Xóa
+                        </button>
+                      </td>
+                    </>
+                  )}
                 </tr>
               ))}
+
             </tbody>
           </table>
           <p>

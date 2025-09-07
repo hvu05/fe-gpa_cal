@@ -12,7 +12,6 @@ function GpaCalc() {
 
     const [refresh, setRefresh] = useState(true)
     const { semesters, loading } = useSemesterByUserId(refresh)
-    const token = localStorage.getItem('token')
     const [idSemester, setIdSemester] = useState("")
     // dùng cho việc save giá trị khi chọn select option để gọi API thêm điểm
 
@@ -51,7 +50,7 @@ function GpaCalc() {
                 subjectName: subject.name,
                 credit: subject.credit
             }, {
-                headers: { token: token }
+                withCredentials: true
             })
 
             await axios.post(`${URL_BASE_API}/grade`, {
@@ -60,7 +59,7 @@ function GpaCalc() {
                 grade10: grade.grade10,
                 grade4: grade.grade4
             }, {
-                headers: { token: token }
+                withCredentials: true
             })
 
             message.success("Thêm môn học thành công ✅")
@@ -82,7 +81,7 @@ function GpaCalc() {
             await axios.post(`${URL_BASE_API}/semester`, {
                 semesterName: semName
             }, {
-                headers: { token: token }
+                withCredentials: true
             })
             setRefresh(!refresh)
             setSemName('')
@@ -97,7 +96,7 @@ function GpaCalc() {
     const HandleDeleteASemester = async (_id) => {
         try {
             await axios.delete(`${URL_BASE_API}/semester/${_id}`, {
-                headers: { token: token }
+                withCredentials: true
             })
             message.success('Delete a semester success')
             setRefresh(!refresh)
@@ -159,6 +158,8 @@ function GpaCalc() {
                                     onChange={(e) => setSubject({ ...subject, credit: Number(e.target.value) })}
                                     required
                                     className="input-btn subject-form__credit-input"
+                                    type="number"
+                                    min={0}
                                 />
                             </div>
 
@@ -186,6 +187,7 @@ function GpaCalc() {
                                     required
                                     placeholder="Thang 10"
                                     className="input-btn subject-form__grade-input__input"
+                                    type="number"
                                 />
                             </div>
                         </div>
@@ -219,6 +221,7 @@ function GpaCalc() {
             <div className="gpa-form-container">
                 <GpaTable refresh={refresh} setRefresh={setRefresh}/>
             </div>
+            
         </>
     )
 }

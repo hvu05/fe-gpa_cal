@@ -23,7 +23,7 @@ function SetNewPassword() {
                 await axios.put(`${URL_BASE_API}/reset-password`, {
                     email, new_password: newPassword
                 }, {
-                    headers: { token: otpToken }
+                    withCredentials: true
                 })
                 message.success('Change password success')
                 setNewPassword('')
