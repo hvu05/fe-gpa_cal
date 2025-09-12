@@ -17,16 +17,12 @@ const GpaTable = ({ refresh, setRefresh }) => {
         withCredentials: true
       })
       setRefresh(prev => !prev)
-      message.success('Delete a subject success')
+      message.success('Xóa môn học thành công!')
     } catch (err) {
       message.error('Delete a subject FAILED')
     }
   }
 
-  // const handleEdit = (          gradeId,     subjectId) => {
-  // onClick={() => handleEdit(subject._id, subject.subjectId._id)}
-
-  // }
   const handleEdit = (subject) => {
     setEditingId({ gradeId: subject._id, subjectId: subject.subjectId._id })
     setEditValues({
@@ -69,7 +65,7 @@ const GpaTable = ({ refresh, setRefresh }) => {
   return (
     <div className="gpa-table-container">
       {loading && <p>Loading ...</p>}
-      {!loading && 
+      {!loading &&
         <div className="overall-container">
           <div className="overallGpa">Điểm TBTL: <span>{grades.overallGPA}</span></div>
           <div className="totalCredit">Tổng TCTL: <span>{grades.totalCredit}</span></div>
@@ -130,6 +126,10 @@ const GpaTable = ({ refresh, setRefresh }) => {
                           name="grade10"
                           value={editValues.grade10}
                           onChange={handleChange}
+                          max={10}
+                          min={0}
+                          step='0.01'
+                          type="number"
                         />
                       </td>
                       <td>{subject.gradeChar}</td>
@@ -148,8 +148,8 @@ const GpaTable = ({ refresh, setRefresh }) => {
                     <>
                       <td>{subject.subjectId.subjectName}</td>
                       <td>{subject.subjectId.credit}</td>
-                      <td>{subject.grade4}</td>
-                      <td>{subject.grade10}</td>
+                      <td>{Number(subject.grade4).toFixed(1)}</td>
+                      <td>{Number(subject.grade10).toFixed(2)}</td>
                       <td>{subject.gradeChar}</td>
 
                       <td>

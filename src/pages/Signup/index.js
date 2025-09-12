@@ -14,7 +14,12 @@ function Signup() {
     const [loading, setLoading] = useState(false)
 
     const HandleSubmit = async () => {
-        // verify otp
+        // check username valid
+        if(username.includes('@') || username.includes('.'))
+        {
+            message.warning('Tên đăng nhập không chứ ký tự đặc biệt')
+            return
+        }
         try {
             await axios.post(`${URL_BASE_API}/otp/verify-otp`, {
                 otp: otp,
@@ -32,7 +37,6 @@ function Signup() {
             })
             message.success('Registration successful')
             navigate('/dashboard')
-            // navigate('/') // Navigate to login page after successful registration
         }
         catch (err) {
             if (err.response && err.response.data) {

@@ -8,10 +8,11 @@ import { useState } from 'react'
 import { URL_BASE_API } from '../../constants'
 import { message } from 'antd'
 import { useNavigate } from 'react-router-dom'
+import SePay from '../../components/SePay'
 
 function Dashboard() {
     const [isOpen, setIsOpen] = useState(true)
-    const [activeItem, setActiveItem] = useState('profile')
+    const [activeItem, setActiveItem] = useState('Dashboard')
     const token = getTokenFromUrl()
     localStorage.setItem('token', token)
     const navigate = useNavigate()
@@ -19,6 +20,8 @@ function Dashboard() {
         'Dashboard': <DashboardComponent />,
         'GPA Calculator': <GpaCalc />,
         'profile': <Profile />,
+        'sepay': <SePay />,
+        'statistical': <SePay />
     }
     const HandleLogout = async () => {
         try {
@@ -50,6 +53,13 @@ function Dashboard() {
                         </div>
 
                         <div
+                            className={`item ${activeItem == 'statistical' ? 'item-active' : ''}`}
+                            onClick={() => setActiveItem("statistical")}
+                        >
+                            <i class="fa-solid fa-chart-simple"></i> Statistical
+                        </div>
+
+                        <div
                             className={`item ${activeItem == 'profile' ? 'item-active' : ''}`}
                             onClick={() => setActiveItem("profile")}
                         >
@@ -60,6 +70,13 @@ function Dashboard() {
                             onClick={() => setActiveItem("Setting")}
                         >
                             <i class="fa-solid fa-gear"></i> Setting
+                        </div>
+
+                        <div
+                            className={`item ${activeItem == 'sepay' ? 'item-active' : ''}`}
+                            onClick={() => setActiveItem("sepay")}
+                        >
+                            <i class="fa-solid fa-award"></i> To Premium
                         </div>
 
                         <div

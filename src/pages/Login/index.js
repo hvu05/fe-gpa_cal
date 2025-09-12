@@ -5,7 +5,7 @@ import axios from 'axios'
 import { URL_BASE_API } from '../../constants'
 import { message } from 'antd'
 function Login() {
-    const [username, setUsername] = useState('')
+    const [usernameOrEmail, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
 
@@ -14,13 +14,13 @@ function Login() {
             message.error("Password must be at least 6 characters long.")
             return
         }
-        if(username.length < 2) {
+        if(usernameOrEmail.length < 2) {
             message.error("Username must be at least 3 characters long.")
             return
         }
         try {
             const user = await axios.post(`${URL_BASE_API}/auth/login`, {
-                username, password
+                usernameOrEmail, password
             }, { withCredentials: true })
             if (user) {
                 message.success('Login success')

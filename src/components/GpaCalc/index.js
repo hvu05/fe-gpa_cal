@@ -169,19 +169,20 @@ function GpaCalc() {
                                     onChange={(e) => setGrade({ ...grade, grade4: Number(e.target.value) })}
                                     className="input-btn subject-form__grade-input__selector"
                                 >
-                                    <option disabled value={4}>Thang 4</option>
-                                    <option value={4}>4</option>
+                                    <option disabled>Thang 4</option>
+                                    <option value={4}>4.0</option>
                                     <option value={3.5}>3.5</option>
-                                    <option value={3}>3</option>
+                                    <option value={3}>3.0</option>
                                     <option value={2.5}>2.5</option>
-                                    <option value={2}>2</option>
+                                    <option value={2}>2.0</option>
                                     <option value={1.5}>1.5</option>
-                                    <option value={1}>1</option>
+                                    <option value={1}>1.0</option>
                                 </select>
 
                                 <input
                                     max={10}
                                     min={0}
+                                    step='0.01'
                                     value={grade.grade10}
                                     onChange={(e) => setGrade({ ...grade, grade10: Number(e.target.value) })}
                                     required
