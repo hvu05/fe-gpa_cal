@@ -75,10 +75,10 @@ const GpaTable = ({ refresh, setRefresh }) => {
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
-      onOk() {
+      onOk:() => {
         handleDelete(_id)
       },
-      onCancel() {
+      onCancel:() => {
         console.log('Hủy');
       },
     })
@@ -182,7 +182,9 @@ const GpaTable = ({ refresh, setRefresh }) => {
                           </button>
                           <button
                             className="action-btn delete-btn"
-                            onClick={() => showDeleteConfirm(subject._id, subject.subjectId.subjectName)}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              showDeleteConfirm(subject._id, subject.subjectId.subjectName)}}
                           >
                             Xóa
                           </button>
