@@ -13,8 +13,8 @@ import SePay from '../../components/SePay'
 function Dashboard() {
     const [isOpen, setIsOpen] = useState(true)
     const [activeItem, setActiveItem] = useState('Dashboard')
-    const token = getTokenFromUrl()
-    localStorage.setItem('token', token)
+    // const token = getTokenFromUrl()
+    // localStorage.setItem('token', token)
     const navigate = useNavigate()
     const components = {
         'Dashboard': <DashboardComponent />,

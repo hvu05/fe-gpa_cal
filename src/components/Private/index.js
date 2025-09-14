@@ -16,6 +16,7 @@ function Private() {
                 setStatus('auth')
                 console.log('GET user', result)
             } catch (err) {
+                console.log('GET user at PRIVATE', err)
                 setStatus('un_auth')
             }
         }

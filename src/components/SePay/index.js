@@ -5,7 +5,8 @@ import { message, Card, Spin, Typography } from 'antd'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 
 const { Title, Text } = Typography
-const host = "http://localhost:8000"
+
+const host = process.env.BACKEND_URL
 
 function SePay() {
     const socketRef = useRef()

@@ -35,7 +35,7 @@ function Login() {
         }
     }
 
-    const HandleSignUpWithGG = async () => {
+    const HandleLoginWithGG = async () => {
         try {
             window.location.href = `${URL_BASE_API}/auth/google`
         } catch (e) {
@@ -53,7 +53,7 @@ function Login() {
                     </div>
 
                     <div className='google-container'>
-                        <button className='login-google' onClick={HandleSignUpWithGG}>
+                        <button className='login-google' onClick={HandleLoginWithGG}>
                             <img src='/images/gg.png' alt='google' className="google-icon" />
                             <span className='g'>Login with Google</span>
                         </button>
