@@ -149,8 +149,7 @@ function GpaCalc() {
                                             <button
                                                 type="button"
                                                 onClick={(e) => {
-                                                    e.preventDefault();
-                                                    showDeleteConfirm(s._id, s.semesterName);
+                                                    HandleDeleteASemester(s._id)
                                                 }}
                                             >
                                                 X
