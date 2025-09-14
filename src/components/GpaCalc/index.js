@@ -107,7 +107,7 @@ function GpaCalc() {
             message.error('Delete a semester invalid')
         }
     }
-    const showDeleteConfirm = (_id, name) => {
+    const showDeleteConfirm = async (_id, name) => {
         confirm({
             title: 'Xóa môn học',
             icon: <ExclamationCircleFilled />,
@@ -115,10 +115,8 @@ function GpaCalc() {
             okText: 'Yes',
             okType: 'danger',
             cancelText: 'No',
-            onOk() {
-                HandleDeleteASemester(_id)
-            },
-            onCancel() {
+            onOk: () => HandleDeleteASemester(_id),
+            onCancel: () => {
                 console.log('Hủy');
             },
         })
@@ -148,7 +146,13 @@ function GpaCalc() {
                                 <ul>
                                     {!loading && semesters.data.data.map((s, i) => (
                                         <li key={i}>{s.semesterName}
-                                            <button onClick={() => showDeleteConfirm(s._id, s.semesterName)} type="button">
+                                            <button
+                                                type="button"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    showDeleteConfirm(s._id, s.semesterName);
+                                                }}
+                                            >
                                                 X
                                             </button>
                                         </li>
