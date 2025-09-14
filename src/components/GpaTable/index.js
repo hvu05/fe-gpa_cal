@@ -182,9 +182,7 @@ const GpaTable = ({ refresh, setRefresh }) => {
                           </button>
                           <button
                             className="action-btn delete-btn"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              showDeleteConfirm(subject._id, subject.subjectId.subjectName)}}
+                            onClick={(e) => handleDelete(subject._id)}
                           >
                             Xóa
                           </button>
