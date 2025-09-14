@@ -7,7 +7,7 @@
   transition: all 0.3s ease;
   min-height: 100vh;
   &.open .sidebar {
-    background-color: $sidebar-color;
+    background-color: $primary-color;
     // width: 900px;
     min-height: 87vh;
     margin: 0 40px 10px 0;
