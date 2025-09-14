@@ -16,7 +16,7 @@ function useInfoAUser(refresh) {
 
             } catch (err) {
                 message.error('Vui lòng đăng nhập lại')
-                console.log(err);
+                // console.log(err);
                 
                 // setLoading(false)
             }

@@ -37,7 +37,7 @@ function InfoUserCommon({ user, setStatusUI, loading }) {
             message.success('Thay đổi thông tin thành công!')
         } catch (err) {
             message.error('Thay đổi thất bại, vui lòng nhập tên khác hoặc đăng nhập lại!')
-            console.log(err)
+            // console.log(err)
         }
     }
     return (

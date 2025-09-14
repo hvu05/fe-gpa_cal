@@ -74,7 +74,7 @@ function GpaCalc() {
 
         } catch (err) {
             message.error("Thêm môn học thất bại ❌")
-            console.log('err at post subject or grade', err)
+            // console.log('err at post subject or grade', err)
         }
     }
 
@@ -117,7 +117,7 @@ function GpaCalc() {
             cancelText: 'No',
             onOk: () => HandleDeleteASemester(_id),
             onCancel: () => {
-                console.log('Hủy');
+                // console.log('Hủy');
             },
         })
     }

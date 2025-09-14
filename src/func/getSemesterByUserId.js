@@ -16,7 +16,7 @@ function useSemesterByUserId(refresh) {
                 setSemesters(response)
             } catch (err) {
                 message.error('Error at get all semester')
-                console.log(err);
+                // console.log(err);
                 
                 // setLoading(false)
             }

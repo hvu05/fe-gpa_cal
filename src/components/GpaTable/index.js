@@ -79,7 +79,7 @@ const GpaTable = ({ refresh, setRefresh }) => {
         handleDelete(_id)
       },
       onCancel:() => {
-        console.log('Hủy');
+        // console.log('Hủy');
       },
     })
   }

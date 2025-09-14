@@ -15,11 +15,11 @@ function useGetAllGrade(refresh) {
                 const response = await axios.get(`${URL_BASE_API}/grade`, { withCredentials: true })
                 setLoading(false)
                 setGrades(response.data.data)
-                console.log('grades',response.data.data)
+                // console.log('grades',response.data.data)
 
             } catch (err) {
                 message.error('Vui lòng đăng nhập lại')
-                console.log(err);
+                // console.log(err);
                 
                 // setLoading(false)
             }

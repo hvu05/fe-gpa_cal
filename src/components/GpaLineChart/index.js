@@ -13,7 +13,7 @@ function GpaLineChart() {
         value: parseFloat(info.gpa),
       }));
       setChartData(newData);
-      console.log("Chart data:", newData);
+      // console.log("Chart data:", newData);
     }
   }, [grades, loading]);
   const data = chartData
