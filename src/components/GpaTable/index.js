@@ -4,6 +4,9 @@ import useGetAllGrade from "../../func/getAllGrade"
 import axios from "axios"
 import { URL_BASE_API } from "../../constants"
 import { message } from "antd"
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { Button, Modal, Space } from 'antd';
+const { confirm } = Modal;
 
 const GpaTable = ({ refresh, setRefresh }) => {
   const { grades, loading } = useGetAllGrade(refresh)
@@ -62,124 +65,142 @@ const GpaTable = ({ refresh, setRefresh }) => {
     }
   }
 
-  return (
-    <div className="gpa-table-container">
-      {loading && <p>Loading ...</p>}
-      {!loading &&
-        <div className="overall-container">
-          <div className="overallGpa">Điểm TBTL: <span>{grades.overallGPA}</span></div>
-          <div className="totalCredit">Tổng TCTL: <span>{grades.totalCredit}</span></div>
-        </div>
-      }
-      {!loading && grades.gradesBySemester.map((semester, semesterIndex) => (
-        <div key={semester.semesterId} className="semester-table-wrapper">
-          <h3>{semester.semesterName}</h3>
-          <table className="gpa-table">
-            <thead>
-              <tr>
-                <th>STT</th>
-                <th>Tên môn học</th>
-                <th>Tín chỉ</th>
-                <th>Thang 4</th>
-                <th>Thang 10</th>
-                <th>Điểm chữ</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {semester.subjects.length == 0 && <p>Chưa có môn học</p>}
-              {semester.subjects.length > 0 && semester.subjects.map((subject, subjectIndex) => (
-                <tr key={subject._id}>
-                  <td>{subjectIndex + 1}</td>
 
-                  {editingId.gradeId === subject._id ? (
-                    <>
-                      <td>
-                        <input
-                          name="subjectName"
-                          value={editValues.subjectName}
-                          onChange={handleChange}
-                          className="input-subject-name"
-                        />
-                      </td>
-                      <td>
-                        <input
-                          name="credit"
-                          value={editValues.credit}
-                          onChange={handleChange}
-                          type="number"
-                        />
-                      </td>
-                      <td>
-                        <input
-                          name="grade4"
-                          value={editValues.grade4}
-                          onChange={handleChange}
-                          type="number"
-                          step={0.5}
-                          max={4}
-                          min={0}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          name="grade10"
-                          value={editValues.grade10}
-                          onChange={handleChange}
-                          max={10}
-                          min={0}
-                          step='0.01'
-                          type="number"
-                        />
-                      </td>
-                      <td>{subject.gradeChar}</td>
-                      <td>
-
-                        <button className="action-btn cancel-btn" onClick={() => setEditingId({ gradeId: 0 })}>Hủy</button>
-                        <button
-                          onClick={() => handleSave(subject._id, subject.subjectId._id)}
-                          className="action-btn save-btn"
-                        >
-                          Lưu
-                        </button>
-                      </td>
-                    </>
-                  ) : (
-                    <>
-                      <td>{subject.subjectId.subjectName}</td>
-                      <td>{subject.subjectId.credit}</td>
-                      <td>{Number(subject.grade4).toFixed(1)}</td>
-                      <td>{Number(subject.grade10).toFixed(2)}</td>
-                      <td>{subject.gradeChar}</td>
-
-                      <td>
-                        <button
-                          className="action-btn edit-btn"
-                          onClick={() => handleEdit(subject)}
-                        >
-                          Sửa
-                        </button>
-                        <button
-                          className="action-btn delete-btn"
-                          onClick={() => handleDelete(subject._id)}
-                        >
-                          Xóa
-                        </button>
-                      </td>
-                    </>
-                  )}
+  // !DELETE
+  const showDeleteConfirm = (_id, name) => {
+    confirm({
+      title: 'Xóa môn học',
+      icon: <ExclamationCircleFilled />,
+      content: `Bạn có chắc chắn muốn xóa môn ${name}`,
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        handleDelete(_id)
+      },
+      onCancel() {
+        console.log('Hủy');
+      },
+    })
+  }
+    return (
+      <div className="gpa-table-container">
+        {loading && <p>Loading ...</p>}
+        {!loading &&
+          <div className="overall-container">
+            <div className="overallGpa">Điểm TBTL: <span>{grades.overallGPA}</span></div>
+            <div className="totalCredit">Tổng TCTL: <span>{grades.totalCredit}</span></div>
+          </div>
+        }
+        {!loading && grades.gradesBySemester.map((semester, semesterIndex) => (
+          <div key={semester.semesterId} className="semester-table-wrapper">
+            <h3>{semester.semesterName}</h3>
+            <table className="gpa-table">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tên môn học</th>
+                  <th>Tín chỉ</th>
+                  <th>Thang 4</th>
+                  <th>Thang 10</th>
+                  <th>Điểm chữ</th>
+                  <th>Action</th>
                 </tr>
-              ))}
+              </thead>
+              <tbody>
+                {semester.subjects.length == 0 && <p>Chưa có môn học</p>}
+                {semester.subjects.length > 0 && semester.subjects.map((subject, subjectIndex) => (
+                  <tr key={subject._id}>
+                    <td>{subjectIndex + 1}</td>
 
-            </tbody>
-          </table>
-          <p>
-            GPA: {semester.gpa}; Tổng tín chỉ: {semester.totalCredits}
-          </p>
-        </div>
-      ))}
-    </div>
-  );
-};
+                    {editingId.gradeId === subject._id ? (
+                      <>
+                        <td>
+                          <input
+                            name="subjectName"
+                            value={editValues.subjectName}
+                            onChange={handleChange}
+                            className="input-subject-name"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            name="credit"
+                            value={editValues.credit}
+                            onChange={handleChange}
+                            type="number"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            name="grade4"
+                            value={editValues.grade4}
+                            onChange={handleChange}
+                            type="number"
+                            step={0.5}
+                            max={4}
+                            min={0}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            name="grade10"
+                            value={editValues.grade10}
+                            onChange={handleChange}
+                            max={10}
+                            min={0}
+                            step='0.01'
+                            type="number"
+                          />
+                        </td>
+                        <td>{subject.gradeChar}</td>
+                        <td>
 
-export default GpaTable;
+                          <button className="action-btn cancel-btn" onClick={() => setEditingId({ gradeId: 0 })}>Hủy</button>
+                          <button
+                            onClick={() => handleSave(subject._id, subject.subjectId._id)}
+                            className="action-btn save-btn"
+                          >
+                            Lưu
+                          </button>
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        <td>{subject.subjectId.subjectName}</td>
+                        <td>{subject.subjectId.credit}</td>
+                        <td>{Number(subject.grade4).toFixed(1)}</td>
+                        <td>{Number(subject.grade10).toFixed(2)}</td>
+                        <td>{subject.gradeChar}</td>
+
+                        <td>
+                          <button
+                            className="action-btn edit-btn"
+                            onClick={() => handleEdit(subject)}
+                          >
+                            Sửa
+                          </button>
+                          <button
+                            className="action-btn delete-btn"
+                            onClick={() => showDeleteConfirm(subject._id, subject.subjectId.subjectName)}
+                          >
+                            Xóa
+                          </button>
+                        </td>
+                      </>
+                    )}
+                  </tr>
+                ))}
+
+              </tbody>
+            </table>
+            <p>
+              GPA: {semester.gpa}; Tổng tín chỉ: {semester.totalCredits}
+            </p>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  export default GpaTable;

@@ -21,7 +21,6 @@ function Dashboard() {
         'GPA Calculator': <GpaCalc />,
         'profile': <Profile />,
         'sepay': <SePay />,
-        'statistical': <SePay />
     }
     const HandleLogout = async () => {
         try {
@@ -52,12 +51,12 @@ function Dashboard() {
                             <i class="fa-solid fa-calculator"></i> GPA Calculator
                         </div>
 
-                        <div
+                        {/* <div
                             className={`item ${activeItem == 'statistical' ? 'item-active' : ''}`}
                             onClick={() => setActiveItem("statistical")}
                         >
                             <i class="fa-solid fa-chart-simple"></i> Statistical
-                        </div>
+                        </div> */}
 
                         <div
                             className={`item ${activeItem == 'profile' ? 'item-active' : ''}`}

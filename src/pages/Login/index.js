@@ -45,7 +45,7 @@ function Login() {
     return (
         <>
             <div className="login">
-                <img src="/images/login.svg" />
+                <img className='logo' src="/images/login.svg" />
                 <div className='form-login'>
                     <div className='title'>
                         <span className='webcome'>Welcome to </span>

@@ -5,6 +5,9 @@ import { URL_BASE_API } from "../../constants"
 import { message } from "antd"
 import './GpaCalc.scss'
 import GpaTable from "../GpaTable"
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { Button, Modal, Space } from 'antd';
+const { confirm } = Modal;
 
 function GpaCalc() {
     const [subject, setSubject] = useState({ name: '', credit: '' })
@@ -104,6 +107,22 @@ function GpaCalc() {
             message.error('Delete a semester invalid')
         }
     }
+    const showDeleteConfirm = (_id, name) => {
+        confirm({
+            title: 'Xóa môn học',
+            icon: <ExclamationCircleFilled />,
+            content: `Bạn có chắc chắn muốn xóa học kì ${name}`,
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                HandleDeleteASemester(_id)
+            },
+            onCancel() {
+                console.log('Hủy');
+            },
+        })
+    }
     return (
         <>
             <div className="gpa-form-container">
@@ -129,7 +148,7 @@ function GpaCalc() {
                                 <ul>
                                     {!loading && semesters.data.data.map((s, i) => (
                                         <li key={i}>{s.semesterName}
-                                            <button onClick={() => HandleDeleteASemester(s._id)} type="button">
+                                            <button onClick={() => showDeleteConfirm(s._id, s.semesterName)} type="button">
                                                 X
                                             </button>
                                         </li>
@@ -220,9 +239,9 @@ function GpaCalc() {
             <div className="divider"></div>
 
             <div className="gpa-form-container">
-                <GpaTable refresh={refresh} setRefresh={setRefresh}/>
+                <GpaTable refresh={refresh} setRefresh={setRefresh} />
             </div>
-            
+
         </>
     )
 }
