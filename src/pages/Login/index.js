@@ -23,9 +23,9 @@ function Login() {
                 usernameOrEmail, password
             }, { withCredentials: true })
             if (user) {
-                console.log("👉 Sắp gọi message.success");
+                console.log("👉 Sắp gọi message.success")
                 message.success("Thành công!");
-                console.log("👉 Đã gọi message.success");
+                console.log("👉 Đã gọi message.success")
                 navigate(`/dashboard`)
             }
             else {

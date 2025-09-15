@@ -64,6 +64,7 @@ const GpaTable = ({ refresh, setRefresh }) => {
       setRefresh(prev => !prev);
       console.log('Before Update success')
       toast.success("Update success")
+      alert('Update success')
       message.success({
         content: "Update success",
         duration: 5, // 5 giây để dễ thấy
