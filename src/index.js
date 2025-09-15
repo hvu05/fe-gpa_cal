@@ -7,11 +7,12 @@ import { ConfigProvider } from 'antd';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <ConfigProvider>
-        <BrowserRouter>
+    <BrowserRouter>
+        <ConfigProvider>
             <App />
-        </BrowserRouter>
-    </ConfigProvider>
+        </ConfigProvider>
+    </BrowserRouter>
+
 );
 
 // If you want to start measuring performance in your app, pass a function
