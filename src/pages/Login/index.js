@@ -10,11 +10,11 @@ function Login() {
     const navigate = useNavigate()
 
     const HandleSubmitLogin = async () => {
-        if(password.length < 6) {
+        if (password.length < 6) {
             message.error("Password must be at least 6 characters long.")
             return
         }
-        if(usernameOrEmail.length < 2) {
+        if (usernameOrEmail.length < 2) {
             message.error("Username must be at least 3 characters long.")
             return
         }
@@ -23,7 +23,9 @@ function Login() {
                 usernameOrEmail, password
             }, { withCredentials: true })
             if (user) {
-                message.success('Login success')
+                console.log("👉 Sắp gọi message.success");
+                message.success("Thành công!");
+                console.log("👉 Đã gọi message.success");
                 navigate(`/dashboard`)
             }
             else {

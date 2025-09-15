@@ -60,6 +60,8 @@ const GpaTable = ({ refresh, setRefresh }) => {
       setEditingId({ gradeId: 0 });
       setEditValues({});
       setRefresh(prev => !prev);
+
+      message.success("Update success")
     } catch (err) {
       message.error("Update failed")
     }
