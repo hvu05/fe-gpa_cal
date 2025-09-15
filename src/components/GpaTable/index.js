@@ -7,6 +7,7 @@ import { message } from "antd"
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { Button, Modal, Space } from 'antd';
 const { confirm } = Modal;
+import { toast} from 'react-toastify'
 
 const GpaTable = ({ refresh, setRefresh }) => {
   const { grades, loading } = useGetAllGrade(refresh)
@@ -60,12 +61,15 @@ const GpaTable = ({ refresh, setRefresh }) => {
       setEditingId({ gradeId: 0 });
       setEditValues({});
       setRefresh(prev => !prev);
+      console.log('Before Update success')
+      toast.success("Update success")
       message.success({
         content: "Update success",
         duration: 5, // 5 giây để dễ thấy
         key: 'update-success', // Unique key để tránh conflict
         style: { zIndex: 9999, position: 'fixed', top: '20px' } // Force style
       });
+      console.log('After Update success')
     } catch (err) {
       console.error('Error in handleSave:', err.response?.data || err.message);
       message.error({
