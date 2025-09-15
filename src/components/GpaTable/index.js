@@ -59,16 +59,21 @@ const GpaTable = ({ refresh, setRefresh }) => {
       })
       setEditingId({ gradeId: 0 });
       setEditValues({});
-      await new Promise(res => message.success({ content: 'Xóa môn học thành công!', duration: 1, onClose: res }))
+      setRefresh(prev => !prev);
       message.success({
-        content: 'Xóa môn học thành công!',
-        duration: 2,
-        onClose: () => {
-          setRefresh(prev => !prev)
-        }
+        content: "Update success",
+        duration: 5, // 5 giây để dễ thấy
+        key: 'update-success', // Unique key để tránh conflict
+        style: { zIndex: 9999, position: 'fixed', top: '20px' } // Force style
       });
     } catch (err) {
-      message.error("Update failed")
+      console.error('Error in handleSave:', err.response?.data || err.message);
+      message.error({
+        content: "Update failed",
+        duration: 5,
+        key: 'update-error',
+        style: { zIndex: 9999 }
+      });
     }
   }
 
