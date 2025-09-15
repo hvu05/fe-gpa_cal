@@ -6,8 +6,9 @@ import { URL_BASE_API } from "../../constants"
 import { message } from "antd"
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { Button, Modal, Space } from 'antd';
-const { confirm } = Modal;
 import { toast} from 'react-toastify'
+
+const { confirm } = Modal;
 
 const GpaTable = ({ refresh, setRefresh }) => {
   const { grades, loading } = useGetAllGrade(refresh)
