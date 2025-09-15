@@ -4,9 +4,7 @@ import './style/main.scss'
 import Allrouter from './components/Allroutes';
 function App() {
   return (
-    <ConfigProvider>
       <Allrouter />
-    </ConfigProvider>
   );
 }
 
